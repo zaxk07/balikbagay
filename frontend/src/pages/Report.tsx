@@ -57,9 +57,9 @@ export default function Report() {
 
   if (saved) {
     return (
-      <div className="pop mx-auto max-w-xl rounded-2xl border border-line bg-card p-8 text-center">
-        <CheckCircle2 className="mx-auto mb-4 text-ok" size={48} />
-        <h1 className="text-3xl font-semibold">Logged. Thank you.</h1>
+      <div className="pop mx-auto max-w-xl surface p-8 text-center">
+        <CheckCircle2 className="mx-auto mb-4 text-ok-ink" size={48} />
+        <h1 className="text-3xl font-extrabold">Logged. Thank you.</h1>
         <p className="mt-3 text-muted"><strong className="text-ink">{saved.title}</strong> is now in the inventory and searchable in the Smart Scanner immediately.</p>
         <div className="mt-6 flex flex-wrap justify-center gap-3">
           <a href={href('scanner')} className="btn-primary">Try it in the Scanner</a>
@@ -75,7 +75,7 @@ export default function Report() {
       <PageHead eyebrow="Report Found Item" title="Found something? Log it in a minute.">
         A clear photo against a plain background gives the best matches. Avoid showing personal details like ID numbers.
       </PageHead>
-      <form onSubmit={submit} className="grid max-w-4xl gap-8 rounded-2xl border border-line bg-card p-6 md:grid-cols-[260px_1fr]">
+      <form onSubmit={submit} className="grid max-w-4xl gap-8 surface p-6 md:grid-cols-[260px_1fr]">
         <div>
           <span className="label">Photo</span>
           {photo ? (
@@ -85,7 +85,7 @@ export default function Report() {
             </div>
           ) : (
             <button type="button" onClick={() => inputRef.current?.click()} onDragOver={(e) => e.preventDefault()} onDrop={(e) => { e.preventDefault(); void pick(e.dataTransfer.files[0]) }}
-              className="flex aspect-square w-full flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-line bg-paper px-4 text-center hover:border-ink/40">
+              className="flex aspect-square w-full flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-slate-300 bg-paper px-4 text-center hover:border-brand">
               <ImagePlus className="text-brand" size={28} /><span className="text-sm font-semibold">Add photo</span><span className="text-xs text-muted">Click or drop</span>
             </button>
           )}
@@ -100,7 +100,7 @@ export default function Report() {
             <div><label className="label" htmlFor="d">Date found</label><input id="d" type="date" required max={today()} className="field" value={date} onChange={(e) => setDate(e.target.value)} /></div>
           </div>
           <div><label className="label" htmlFor="x">Description</label><textarea id="x" required rows={4} className="field resize-none" placeholder="Color, brand, size, condition, distinguishing marks. Leave out the one detail an owner would prove." value={description} onChange={(e) => setDescription(e.target.value)} /></div>
-          {error && <p role="alert" className="text-sm font-medium text-brand-dark">{error}</p>}
+          {error && <p role="alert" className="text-sm font-medium text-red-700">{error}</p>}
           <button type="submit" className="btn-primary">Log found item</button>
         </div>
       </form>

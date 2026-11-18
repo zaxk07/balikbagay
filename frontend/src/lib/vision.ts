@@ -152,3 +152,10 @@ export function visualSimilarity(a: Features, b: Features): { score: number; par
   const shape = 0.5 * ratio(a.aspect, b.aspect) + 0.5 * ratio(a.fill, b.fill)
   return { score: 0.6 * color + 0.25 * edge + 0.15 * shape, parts: { color, edge, shape } }
 }
+
+/** Collapse the 16x4x4 HSV histogram to 16 hue bins. Bin 0 also holds every neutral (black/white/gray) pixel. */
+export function hueBins(f: Features): number[] {
+  const out = new Array<number>(16).fill(0)
+  f.hist.forEach((v, i) => (out[Math.floor(i / 16)] += v))
+  return out
+}

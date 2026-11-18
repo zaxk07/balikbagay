@@ -27,7 +27,7 @@ const NOSTEM = new Set(['cics', 'cea', 'cit'])
 export function tokenize(text: string): string[] {
   const out: string[] = []
   for (const raw of text.toLowerCase().split(/[^a-z0-9]+/)) {
-    if (!raw || STOP.has(raw)) continue
+    if (raw.length < 2 || STOP.has(raw)) continue
     let t = raw.length > 3 && raw.endsWith('s') && !raw.endsWith('ss') && !NOSTEM.has(raw) ? raw.slice(0, -1) : raw
     t = SYNONYMS[t] ?? SYNONYMS[raw] ?? t
     out.push(t)
@@ -84,4 +84,18 @@ export function scoreQuery(model: TfidfModel, query: string): { scores: number[]
     return dot
   })
   return { scores, tokens: new Set(tokens) }
+}
+
+/** Per-term contribution to the cosine score between a query and one document (what the score is made of). */
+export function explain(model: TfidfModel, query: string, docIndex: number, top = 5): { token: string; weight: number }[] {
+  const q = weigh(tokenize(query), model.vocab, model.idf)
+  const d = model.docs[docIndex]
+  const inv = new Map<number, string>()
+  for (const [t, i] of model.vocab) inv.set(i, t)
+  const out: { token: string; weight: number }[] = []
+  for (const [i, w] of q) {
+    const dw = d.get(i)
+    if (dw) out.push({ token: inv.get(i)!, weight: w * dw })
+  }
+  return out.sort((a, b) => b.weight - a.weight).slice(0, top)
 }

@@ -2,7 +2,7 @@ import { thumbUri } from './thumbs'
 import { loadImage } from './vision'
 import type { Item } from './types'
 
-const TONES = ['#cdbfa6', '#c4c7cc', '#d6cfc4', '#bfc8c0']
+const TONES = ['#dfe6ef', '#e4e7ec', '#d8e0ea', '#e8ecf1']
 
 export function readFileAsDataUri(file: File): Promise<string> {
   return new Promise((resolve, reject) => {

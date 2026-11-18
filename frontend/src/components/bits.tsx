@@ -10,16 +10,16 @@ export function ItemThumb({ item, className = '' }: { item: Item; className?: st
 
 export function StatusPill({ status }: { status: Item['status'] }) {
   return (
-    <span className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${status === 'Unclaimed' ? 'bg-brand-soft text-brand-dark' : 'bg-ink/10 text-muted'}`}>
-      {status}
+    <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-semibold ${status === 'Unclaimed' ? 'bg-brand-soft text-brand' : 'bg-slate-100 text-muted'}`}>
+      <span className={`h-1.5 w-1.5 rounded-full ${status === 'Unclaimed' ? 'bg-brand' : 'bg-slate-400'}`} />{status}
     </span>
   )
 }
 
 const TAG_STYLE: Record<Tag['kind'], string> = {
-  color: 'border-brand/30 bg-brand-soft text-brand-dark',
-  place: 'border-ok/30 bg-ok/10 text-ok',
-  category: 'border-ink/20 bg-ink/5 text-ink',
+  color: 'border-cv/20 bg-cv-soft text-cv-ink',
+  place: 'border-brand/20 bg-brand-soft text-brand',
+  category: 'border-ok/20 bg-ok-soft text-ok-ink',
   keyword: 'border-line bg-paper text-muted',
 }
 
@@ -32,10 +32,10 @@ export function Meter({ label, value, i = 0, strong = false }: { label: string; 
     <div>
       <div className="mb-1 flex justify-between text-xs">
         <span className="text-muted">{label}</span>
-        <span className="font-mono font-medium tabular-nums">{pct(value)}%</span>
+        <span className="font-mono font-medium tabular-nums text-ink">{pct(value)}%</span>
       </div>
       <div className="h-1.5 overflow-hidden rounded-full bg-line">
-        <div className={`bar h-full rounded-full ${strong ? 'bg-brand' : 'bg-ink/70'}`} style={{ width: `${pct(value)}%`, ['--i' as string]: i }} />
+        <div className={`bar h-full rounded-full ${strong ? 'bg-ok' : 'bg-cv'}`} style={{ width: `${pct(value)}%`, ['--i' as string]: i }} />
       </div>
     </div>
   )
@@ -53,8 +53,8 @@ export function Modal({ title, onClose, children }: { title: string; onClose: ()
     }
   }, [onClose])
   return (
-    <div className="fixed inset-0 z-50 grid place-items-center overflow-y-auto bg-ink/50 p-4" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
-      <div role="dialog" aria-modal="true" aria-label={title} className="pop w-full max-w-lg rounded-2xl border border-line bg-card p-6 shadow-2xl">
+    <div className="fixed inset-0 z-50 grid place-items-center overflow-y-auto bg-slate-900/40 p-4 backdrop-blur-sm" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
+      <div role="dialog" aria-modal="true" aria-label={title} className="pop w-full max-w-lg rounded-3xl border border-line bg-white p-6 shadow-2xl">
         <div className="mb-4 flex items-start justify-between gap-4">
           <h2 className="text-2xl font-semibold">{title}</h2>
           <button onClick={onClose} className="rounded-lg p-1.5 text-muted hover:bg-paper hover:text-ink" aria-label="Close"><X size={20} /></button>

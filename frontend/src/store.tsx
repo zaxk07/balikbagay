@@ -66,10 +66,11 @@ export function ItemsProvider({ children }: { children: ReactNode }) {
       }
     }
     void run()
-    const t = setInterval(run, 15000)
+    // re-check when the tab regains focus instead of polling, to keep the console quiet on hosted deploys
+    window.addEventListener('focus', run)
     return () => {
       alive = false
-      clearInterval(t)
+      window.removeEventListener('focus', run)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reported.length])

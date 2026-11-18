@@ -11,11 +11,11 @@ const SAMPLE = 'Lost my black Aquaflask with a dent near the bottom, left at the
 
 function Step({ n, icon, title, children, viz }: { n: number; icon: ReactNode; title: string; children: ReactNode; viz: ReactNode }) {
   return (
-    <article className="rise grid gap-6 rounded-2xl border border-line bg-card p-6 md:grid-cols-[1fr_320px]" style={{ ['--i' as string]: n }}>
+    <article className="rise grid gap-6 surface p-6 md:grid-cols-[1fr_320px]" style={{ ['--i' as string]: n }}>
       <div>
         <div className="mb-3 flex items-center gap-3">
-          <span className="grid h-9 w-9 place-items-center rounded-lg bg-brand text-white">{icon}</span>
-          <span className="font-mono text-xs uppercase tracking-widest text-muted">Step {n}</span>
+          <span className="grid h-9 w-9 place-items-center rounded-lg bg-cv text-white">{icon}</span>
+          <span className="font-mono text-xs uppercase tracking-widest text-cv-ink">Step {n}</span>
         </div>
         <h2 className="mb-2 text-2xl font-semibold">{title}</h2>
         <div className="space-y-3 text-muted [&_code]:rounded [&_code]:bg-paper [&_code]:px-1.5 [&_code]:font-mono [&_code]:text-[0.85em] [&_code]:text-ink">{children}</div>
@@ -28,7 +28,7 @@ function Step({ n, icon, title, children, viz }: { n: number; icon: ReactNode; t
 export default function HowItWorks() {
   const { items } = useItems()
   const seeds = items.filter((i) => !i.reported)
-  const [id, setId] = useState('bb-001')
+  const [id, setId] = useState('bb-009')
   const item = seeds.find((i) => i.id === id) ?? seeds[0]
   const [feat, setFeat] = useState<Features | null>(null)
 
@@ -47,7 +47,7 @@ export default function HowItWorks() {
     feat.hist.forEach((v, i) => (out[Math.floor(i / 16)] += v))
     return out
   }, [feat])
-  const maxHue = Math.max(...hue, 0.001)
+  const maxHue = Math.max(...hue.slice(1), 0.001) // bin 0 also holds all neutral (black/white/gray) pixels, so scale the chroma bins on their own
   const tokens = tokenize(SAMPLE)
 
   return (
@@ -67,16 +67,16 @@ export default function HowItWorks() {
         <Step n={1} icon={<Palette size={18} />} title="HSV color histogram"
           viz={<div className="flex gap-3"><div className="w-24 shrink-0"><ItemThumb item={item} className="rounded-lg border border-line" /></div>
             <div className="flex h-24 flex-1 items-end gap-0.5" role="img" aria-label="Hue histogram">
-              {hue.map((v, i) => <div key={i} className="flex-1 rounded-t-sm transition-[height] duration-300" style={{ height: `${Math.max(3, (v / maxHue) * 100)}%`, background: i === 0 && v > 0 ? '#6b645b' : `hsl(${(i / 16) * 360} 70% 50%)` }} />)}
+              {hue.map((v, i) => <div key={i} className="flex-1 rounded-t-sm transition-[height] duration-300" style={{ height: `${Math.min(100, Math.max(3, (v / maxHue) * 100))}%`, background: i === 0 && v > 0 ? '#94a3b8' : `hsl(${(i / 16) * 360} 70% 50%)` }} />)}
             </div></div>}>
           <p>The background is estimated from the photo border and masked out. Remaining pixels are converted from RGB to HSV and counted into <code>16 × 4 × 4</code> bins of hue, saturation and value.</p>
           <p>HSV separates color from lighting, so a tumbler in a bright hallway still matches the same tumbler in shade. Histograms are compared by intersection.</p>
-          {feat && <p className="font-mono text-xs">dominant: {feat.colors.join(', ') || 'n/a'}</p>}
+          {feat && <p className="font-mono text-xs">first bar = neutral pixels · dominant: {feat.colors.join(', ') || 'n/a'}</p>}
         </Step>
 
         <Step n={2} icon={<Grid3x3 size={18} />} title="Edge density and shape"
           viz={<div><div className="grid grid-cols-4 gap-1">
-            {(feat?.grid ?? new Array(16).fill(0)).map((v, i) => <div key={i} className="aspect-square rounded-sm bg-brand transition-opacity duration-300" style={{ opacity: Math.max(0.06, Math.min(1, v * 3)) }} />)}
+            {(feat?.grid ?? new Array(16).fill(0)).map((v, i) => <div key={i} className="aspect-square rounded-sm bg-cv transition-opacity duration-300" style={{ opacity: Math.max(0.06, Math.min(1, v * 3)) }} />)}
           </div>
             <p className="mt-3 font-mono text-[11px] text-muted">edge density {feat ? pct(feat.edge) : 0}% · aspect {feat?.aspect.toFixed(2)} · fill {feat ? pct(feat.fill) : 0}%</p></div>}>
           <p>A Sobel filter finds contours. The share of edge pixels and a <code>4 × 4</code> spatial map capture texture and layout: a calculator is dense with buttons, an umbrella is a smooth taper.</p>
@@ -91,7 +91,7 @@ export default function HowItWorks() {
         </Step>
 
         <Step n={4} icon={<Blend size={18} />} title="Weighted fusion"
-          viz={<div className="space-y-2 font-mono text-sm"><p className="rounded-lg bg-ink p-3 text-paper">score = 0.55 · V + 0.45 · T</p>
+          viz={<div className="space-y-2 font-mono text-sm"><p className="rounded-xl bg-ink p-3 text-white">score = 0.55 · V + 0.45 · T</p>
             <p className="text-xs text-muted">V = 0.60 color + 0.25 edges + 0.15 shape</p>
             <p className="text-xs text-muted">T = cosine(tfidf(query), tfidf(item))</p></div>}>
           <p>Visual evidence carries slightly more weight than text, because people describe things inconsistently but a photo is hard to argue with. When only one signal is supplied, its score is used directly and the result is labeled <code>visual-only</code> or <code>text-only</code>.</p>

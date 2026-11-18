@@ -53,7 +53,7 @@ NOSTEM = {"cics", "cea", "cit"}
 def tokenize(text: str) -> list[str]:
     out: list[str] = []
     for raw in re.split(r"[^a-z0-9]+", text.lower()):
-        if not raw or raw in STOP:
+        if len(raw) < 2 or raw in STOP:
             continue
         t = raw[:-1] if len(raw) > 3 and raw.endswith("s") and not raw.endswith("ss") and raw not in NOSTEM else raw
         out.append(SYNONYMS.get(t) or SYNONYMS.get(raw) or t)

@@ -2,6 +2,7 @@ import { ImagePlus, Loader2, ScanSearch, Trash2, UploadCloud } from 'lucide-reac
 import { useCallback, useEffect, useRef, useState, type DragEvent } from 'react'
 import { ItemThumb, Meter, TagChip } from '../components/bits'
 import { PageHead } from '../components/Shell'
+import { ScanOverlay } from '../components/ui'
 import { DEMOS } from '../data/seed'
 import { remoteMatch } from '../lib/api'
 import { downscale, presetPhoto, readFileAsDataUri } from '../lib/imaging'
@@ -11,8 +12,8 @@ import { href, type Route } from '../router'
 import { useItems } from '../store'
 
 function verdict(p: number) {
-  if (p >= 70) return { text: 'Strong match', cls: 'text-ok' }
-  if (p >= 45) return { text: 'Possible match', cls: 'text-brand-dark' }
+  if (p >= 70) return { text: 'Strong match', cls: 'text-ok-ink' }
+  if (p >= 45) return { text: 'Possible match', cls: 'text-brand' }
   return { text: 'Weak match', cls: 'text-muted' }
 }
 
@@ -67,6 +68,7 @@ export default function Scanner({ route }: { route: Route }) {
           }
         }
         const feats = q.image ? await featuresFromSrc(q.image) : null
+        if (q.image) await new Promise((r) => setTimeout(r, 900)) // let the scan animation read as real work
         setResults(await rankLocal(items, { description: q.description, location: q.location, category: q.category, image: feats }))
         setEngine('browser')
       } catch {
@@ -117,7 +119,7 @@ export default function Scanner({ route }: { route: Route }) {
 
       <div className="grid gap-8 lg:grid-cols-[420px_1fr]">
         <form
-          className="space-y-5 self-start rounded-2xl border border-line bg-card p-5"
+          className="space-y-5 self-start surface p-5"
           onSubmit={(e) => {
             e.preventDefault()
             void run({ image, description, location, category })
@@ -126,8 +128,9 @@ export default function Scanner({ route }: { route: Route }) {
           <div>
             <span className="label">Photo</span>
             {image ? (
-              <div className="pop relative overflow-hidden rounded-xl border border-line">
+              <div className="pop relative overflow-hidden rounded-2xl border border-line">
                 <img src={image} alt="Your uploaded item" className="aspect-square w-full object-cover" />
+                <ScanOverlay active={busy} label={busy ? 'analyzing…' : 'ready'} />
                 <button type="button" onClick={() => setImage(null)} className="absolute right-2 top-2 rounded-lg bg-ink/80 p-2 text-paper hover:bg-ink" aria-label="Remove photo">
                   <Trash2 size={16} />
                 </button>
@@ -139,8 +142,9 @@ export default function Scanner({ route }: { route: Route }) {
                 onDragOver={(e) => { e.preventDefault(); setDragging(true) }}
                 onDragLeave={() => setDragging(false)}
                 onDrop={onDrop}
-                className={`flex w-full flex-col items-center gap-2 rounded-xl border-2 border-dashed px-4 py-10 text-center transition-colors ${dragging ? 'border-brand bg-brand-soft' : 'border-line bg-paper hover:border-ink/40'}`}
+                className={`flex w-full flex-col items-center gap-2 relative overflow-hidden rounded-2xl border-2 border-dashed px-4 py-12 text-center transition-colors ${dragging ? 'border-brand bg-brand-soft' : 'border-slate-300 bg-paper hover:border-brand'}`}
               >
+                {dragging && <ScanOverlay />}
                 <UploadCloud className="text-brand" size={28} />
                 <span className="text-sm font-semibold">Drop a photo here, or click to browse</span>
                 <span className="text-xs text-muted">Processed locally. Nothing leaves your device unless FastAPI is running.</span>
@@ -181,7 +185,7 @@ export default function Scanner({ route }: { route: Route }) {
               </select>
             </div>
           </div>
-          {error && <p role="alert" className="text-sm font-medium text-brand-dark">{error}</p>}
+          {error && <p role="alert" className="text-sm font-medium text-red-700">{error}</p>}
           <button type="submit" className="btn-primary w-full" disabled={busy}>
             {busy ? <Loader2 className="animate-spin" size={16} /> : <ScanSearch size={16} />} Find matches
           </button>
@@ -208,16 +212,16 @@ export default function Scanner({ route }: { route: Route }) {
                   const p = pct(r.overall)
                   const v = verdict(p)
                   return (
-                    <li key={r.item.id} className="rise grid gap-4 rounded-2xl border border-line bg-card p-4 sm:grid-cols-[112px_1fr_auto]" style={{ ['--i' as string]: i }}>
+                    <li key={r.item.id} className="rise grid gap-4 surface p-4 sm:grid-cols-[112px_1fr_auto]" style={{ ['--i' as string]: i }}>
                       <div className="relative">
                         <ItemThumb item={r.item} className="rounded-xl border border-line" />
-                        <span className="absolute left-1.5 top-1.5 grid h-6 w-6 place-items-center rounded-full bg-ink font-mono text-xs text-paper">{i + 1}</span>
+                        <span className="absolute left-1.5 top-1.5 grid h-6 w-6 place-items-center rounded-full bg-ink font-mono text-xs text-white">{i + 1}</span>
                       </div>
                       <div className="min-w-0">
                         <h3 className="text-lg font-semibold leading-snug">{r.item.title}</h3>
                         <p className="text-sm text-muted">{r.item.building} · {r.item.spot}</p>
                         <div className="mt-3 grid gap-3 sm:grid-cols-2">
-                          <Meter label="Visual similarity" value={r.visual} i={i} />
+                          <Meter label="Visual similarity" value={r.visual} i={i} strong />
                           <Meter label="Text match" value={r.text} i={i} />
                         </div>
                         <p className="mt-2 font-mono text-[11px] text-muted">
@@ -229,7 +233,7 @@ export default function Scanner({ route }: { route: Route }) {
                       </div>
                       <div className="flex items-center justify-between gap-3 sm:flex-col sm:items-end sm:justify-between">
                         <div className="text-right">
-                          <p className={`font-display text-5xl font-semibold leading-none tabular-nums ${i === 0 ? 'text-brand' : ''}`}>{p}<span className="text-2xl">%</span></p>
+                          <p className={`font-mono text-4xl font-medium leading-none tabular-nums ${i === 0 ? 'text-ok-ink' : 'text-ink'}`}>{p}<span className="text-2xl">%</span></p>
                           <p className={`mt-1 text-xs font-semibold ${v.cls}`}>{v.text}</p>
                         </div>
                         <a href={href('inventory', { open: r.item.id })} className="btn-ghost !py-2">This is mine</a>

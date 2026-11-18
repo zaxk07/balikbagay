@@ -6,7 +6,7 @@ from __future__ import annotations
 import cv2
 import numpy as np
 
-BG = "#efe9dd"
+BG = "#eef2f7"
 
 SEED_ITEMS: list[dict] = [
     dict(id="bb-001", title="Black Aquaflask Tumbler", category="Drinkware", building="CICS", spot="2nd floor corridor bench",
@@ -32,19 +32,19 @@ SEED_ITEMS: list[dict] = [
          date="2026-11-14", status="Unclaimed", kind="earbuds", colors=["#f5f5f3", "#d6d6d1", "#3fb36b"]),
     dict(id="bb-008", title="Green Spiral Notebook", category="Stationery", building="Library", spot="Reading area, long table",
          description="Green spiral notebook with handwritten engineering notes inside, about 80 leaves and a white label on the cover.",
-         date="2026-11-07", status="Unclaimed", kind="notebook", colors=["#2f7d4f", "#f6f3ea", "#c9d8ce"]),
+         date="2026-11-07", status="Claimed", kind="notebook", colors=["#2f7d4f", "#f6f3ea", "#c9d8ce"]),
     dict(id="bb-009", title="Red Flash Drive 32GB", category="Electronics", building="CEA", spot="Drafting room 204",
          description="Red USB flash drive 32GB with a metal connector and a keyring hole. Thumb drive with files for plates.",
          date="2026-11-15", status="Unclaimed", kind="flashdrive", colors=["#c62828", "#b9bcc2", "#1d1d1f"]),
     dict(id="bb-010", title="Brown Eyeglasses Case", category="Accessories", building="CIT", spot="Workshop bench",
          description="Brown hard shell eyeglasses case with a cleaning cloth inside and a metal clasp. Leather texture.",
-         date="2026-11-06", status="Unclaimed", kind="glasscase", colors=["#7a4a2b", "#d9b48a", "#3b2616"]),
+         date="2026-11-06", status="Claimed", kind="glasscase", colors=["#7a4a2b", "#d9b48a", "#3b2616"]),
     dict(id="bb-011", title="Gray Pullover Hoodie", category="Apparel", building="Gymnasium", spot="Lockers, near court B",
          description="Gray pullover hoodie with a kangaroo pocket and white drawstrings. Size medium, left sleeve worn.",
          date="2026-11-05", status="Claimed", kind="hoodie", colors=["#8a8d93", "#f2f2f2", "#5d6068"]),
     dict(id="bb-012", title="Keys with Yellow Keychain", category="IDs & Keys", building="Cafeteria", spot="Counter by the cashier",
          description="Set of three keys on a steel ring with a yellow rubber tag keychain. Apartment key and a padlock key.",
-         date="2026-11-12", status="Unclaimed", kind="keys", colors=["#f2c21b", "#b9bcc2", "#8a8d93"]),
+         date="2026-11-12", status="Claimed", kind="keys", colors=["#f2c21b", "#b9bcc2", "#8a8d93"]),
     dict(id="bb-013", title="Beige Canvas Tote Bag", category="Bags", building="Library", spot="Under table at the entrance",
          description="Beige canvas tote bag with brown handles and a front pocket. Contains a folder and a pair of earphones.",
          date="2026-11-10", status="Unclaimed", kind="tote", colors=["#d8c7a3", "#7a4a2b", "#bda97f"]),
@@ -53,7 +53,7 @@ SEED_ITEMS: list[dict] = [
          date="2026-11-13", status="Unclaimed", kind="powerbank", colors=["#18181b", "#e0891d", "#5a5d66"]),
     dict(id="bb-015", title="Blue Notebook with Stickers", category="Stationery", building="CICS", spot="Room 105 desk",
          description="Blue ruled notebook with programming notes and laptop stickers on the cover. Spiral binding.",
-         date="2026-11-14", status="Unclaimed", kind="notebook", colors=["#2a5db0", "#f6f3ea", "#f2c21b"]),
+         date="2026-11-14", status="Claimed", kind="notebook", colors=["#2a5db0", "#f6f3ea", "#f2c21b"]),
 ]
 
 

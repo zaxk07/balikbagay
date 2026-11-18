@@ -39,7 +39,7 @@ export const SEED_ITEMS: Item[] = [
   {
     id: 'bb-008', title: 'Green Spiral Notebook', category: 'Stationery', building: 'Library', spot: 'Reading area, long table',
     description: 'Green spiral notebook with handwritten engineering notes inside, about 80 leaves and a white label on the cover.',
-    date: '2026-11-07', status: 'Unclaimed', kind: 'notebook', colors: ['#2f7d4f', '#f6f3ea', '#c9d8ce'],
+    date: '2026-11-07', status: 'Claimed', kind: 'notebook', colors: ['#2f7d4f', '#f6f3ea', '#c9d8ce'],
   },
   {
     id: 'bb-009', title: 'Red Flash Drive 32GB', category: 'Electronics', building: 'CEA', spot: 'Drafting room 204',
@@ -49,7 +49,7 @@ export const SEED_ITEMS: Item[] = [
   {
     id: 'bb-010', title: 'Brown Eyeglasses Case', category: 'Accessories', building: 'CIT', spot: 'Workshop bench',
     description: 'Brown hard shell eyeglasses case with a cleaning cloth inside and a metal clasp. Leather texture.',
-    date: '2026-11-06', status: 'Unclaimed', kind: 'glasscase', colors: ['#7a4a2b', '#d9b48a', '#3b2616'],
+    date: '2026-11-06', status: 'Claimed', kind: 'glasscase', colors: ['#7a4a2b', '#d9b48a', '#3b2616'],
   },
   {
     id: 'bb-011', title: 'Gray Pullover Hoodie', category: 'Apparel', building: 'Gymnasium', spot: 'Lockers, near court B',
@@ -59,7 +59,7 @@ export const SEED_ITEMS: Item[] = [
   {
     id: 'bb-012', title: 'Keys with Yellow Keychain', category: 'IDs & Keys', building: 'Cafeteria', spot: 'Counter by the cashier',
     description: 'Set of three keys on a steel ring with a yellow rubber tag keychain. Apartment key and a padlock key.',
-    date: '2026-11-12', status: 'Unclaimed', kind: 'keys', colors: ['#f2c21b', '#b9bcc2', '#8a8d93'],
+    date: '2026-11-12', status: 'Claimed', kind: 'keys', colors: ['#f2c21b', '#b9bcc2', '#8a8d93'],
   },
   {
     id: 'bb-013', title: 'Beige Canvas Tote Bag', category: 'Bags', building: 'Library', spot: 'Under table at the entrance',
@@ -74,7 +74,7 @@ export const SEED_ITEMS: Item[] = [
   {
     id: 'bb-015', title: 'Blue Notebook with Stickers', category: 'Stationery', building: 'CICS', spot: 'Room 105 desk',
     description: 'Blue ruled notebook with programming notes and laptop stickers on the cover. Spiral binding.',
-    date: '2026-11-14', status: 'Unclaimed', kind: 'notebook', colors: ['#2a5db0', '#f6f3ea', '#f2c21b'],
+    date: '2026-11-14', status: 'Claimed', kind: 'notebook', colors: ['#2a5db0', '#f6f3ea', '#f2c21b'],
   },
 ]
 
@@ -89,8 +89,8 @@ export interface DemoQuery {
 }
 
 export const DEMOS: DemoQuery[] = [
-  { id: 'tumbler', label: 'Black Insulated Tumbler', place: 'CICS Bldg', description: 'Lost my black insulated tumbler with a handle, I think a dent at the bottom. Aquaflask.', location: 'CICS', category: 'Drinkware', preset: 'bb-001' },
-  { id: 'calculator', label: 'Casio Scientific Calculator', place: 'CEA Lobby', description: 'Black Casio scientific calculator with hard cover, left it after the exam.', location: 'CEA', category: 'Electronics', preset: 'bb-003' },
-  { id: 'earbuds', label: 'White Wireless Earbuds', place: 'CICS Lab 3', description: 'White wireless earbuds in a charging case, scuffed, left near a computer.', location: 'CICS', category: 'Electronics', preset: 'bb-007' },
-  { id: 'umbrella', label: 'Navy Folding Umbrella', place: 'CIT Entrance', description: 'Navy blue folding umbrella with black handle and velcro strap.', location: 'CIT', category: 'Accessories', preset: 'bb-005' },
+  { id: 'tumbler', label: 'Black Aquaflask', place: 'CICS', description: 'Lost my black insulated tumbler with a handle, I think a dent at the bottom. Aquaflask.', location: 'CICS', category: 'Drinkware', preset: 'bb-001' },
+  { id: 'calculator', label: 'Casio fx-991ES', place: 'CEA', description: 'Black Casio scientific calculator with hard cover, left it after the exam.', location: 'CEA', category: 'Electronics', preset: 'bb-003' },
+  { id: 'charger', label: 'Anker 20W Charger', place: 'Library', description: 'White Anker 20W USB-C phone charger with a short cable, left in an outlet at the study carrels.', location: 'Library', category: 'Electronics', preset: 'bb-004' },
+  { id: 'umbrella', label: 'Navy Folding Umbrella', place: 'CIT', description: 'Navy blue folding umbrella with black handle and velcro strap.', location: 'CIT', category: 'Accessories', preset: 'bb-005' },
 ]

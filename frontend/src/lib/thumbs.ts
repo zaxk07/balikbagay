@@ -2,7 +2,7 @@ import type { Item, Kind } from './types'
 
 type Palette = [string, string, string]
 
-const BG = '#efe9dd'
+const BG = '#eef2f7'
 
 const shadow = (cx = 100, cy = 176, rx = 44) =>
   `<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="5" fill="#000" opacity="0.12"/>`
