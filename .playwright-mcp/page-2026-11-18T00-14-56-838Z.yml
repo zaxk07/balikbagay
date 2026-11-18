@@ -1,0 +1,78 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - generic [ref=e4]:
+      - link "BalikBagay" [ref=e5] [cursor=pointer]:
+        - /url: "#/"
+      - navigation "Main" [ref=e14]:
+        - link "Home" [ref=e15] [cursor=pointer]:
+          - /url: "#/"
+        - link "Smart Scanner" [ref=e16] [cursor=pointer]:
+          - /url: "#/scanner"
+        - link "Found Inventory" [ref=e17] [cursor=pointer]:
+          - /url: "#/inventory"
+        - link "Report Found Item" [ref=e18] [cursor=pointer]:
+          - /url: "#/report"
+        - link "How It Works" [ref=e19] [cursor=pointer]:
+          - /url: "#/how-it-works"
+      - generic "Running fully in-browser" [ref=e21]: In-browser engine
+  - main [ref=e23]:
+    - generic [ref=e24]:
+      - paragraph [ref=e25]: Smart Scanner
+      - heading "Show us what you lost." [level=1] [ref=e26]
+      - paragraph [ref=e27]: Upload a photo, describe it, or both. Photo plus description gives the strongest ranking.
+    - generic [ref=e28]:
+      - generic [ref=e29]:
+        - generic [ref=e30]:
+          - generic [ref=e31]: Photo
+          - button "Drop a photo here, or click to browse Processed locally. Nothing leaves your device unless FastAPI is running." [ref=e32] [cursor=pointer]:
+            - generic [ref=e36]: Drop a photo here, or click to browse
+            - generic [ref=e37]: Processed locally. Nothing leaves your device unless FastAPI is running.
+        - generic [ref=e38]:
+          - generic [ref=e39]: Or try a test photo
+          - generic [ref=e40]:
+            - button "Black Insulated Tumbler Tumbler" [ref=e41] [cursor=pointer]:
+              - img "Black Insulated Tumbler" [ref=e42]
+              - generic [ref=e43]: Tumbler
+            - button "Casio Scientific Calculator Calculator" [ref=e44] [cursor=pointer]:
+              - img "Casio Scientific Calculator" [ref=e45]
+              - generic [ref=e46]: Calculator
+            - button "White Wireless Earbuds Earbuds" [ref=e47] [cursor=pointer]:
+              - img "White Wireless Earbuds" [ref=e48]
+              - generic [ref=e49]: Earbuds
+            - button "Navy Folding Umbrella Umbrella" [ref=e50] [cursor=pointer]:
+              - img "Navy Folding Umbrella" [ref=e51]
+              - generic [ref=e52]: Umbrella
+        - generic [ref=e53]:
+          - generic [ref=e54]: Description
+          - textbox "Description" [ref=e55]:
+            - /placeholder: Color, brand, marks, what's inside…
+        - generic [ref=e56]:
+          - generic [ref=e57]:
+            - generic [ref=e58]: Last seen
+            - combobox "Last seen" [ref=e59]:
+              - option "Anywhere" [selected]
+              - option "CICS"
+              - option "CEA"
+              - option "CIT"
+              - option "Library"
+              - option "Gymnasium"
+              - option "Cafeteria"
+          - generic [ref=e60]:
+            - generic [ref=e61]: Category
+            - combobox "Category" [ref=e62]:
+              - option "Any" [selected]
+              - option "Drinkware"
+              - option "Electronics"
+              - option "Stationery"
+              - option "Accessories"
+              - option "Apparel"
+              - option "Bags"
+              - option "IDs & Keys"
+        - button "Find matches" [ref=e63] [cursor=pointer]
+      - generic [ref=e73]:
+        - paragraph [ref=e78]: Ranked matches appear here
+        - paragraph [ref=e79]: Pick one of the test photos on the left to see the full pipeline in one click.
+  - contentinfo [ref=e80]:
+    - generic [ref=e81]:
+      - paragraph [ref=e82]: BalikBagay · Smart computer-vision lost & found for BatStateU Alangilan Campus.
+      - paragraph [ref=e83]: score = 0.55 · visual + 0.45 · text

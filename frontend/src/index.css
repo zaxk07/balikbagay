@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { background: #f7f3ec; color: #1d1a17; -webkit-text-size-adjust: 100%; }
+  body { @apply font-sans antialiased; min-height: 100vh; }
+  h1, h2, h3 { @apply font-display; letter-spacing: -0.015em; text-wrap: balance; }
+  p { text-wrap: pretty; }
+  :focus-visible { outline: 2px solid #b3261e; outline-offset: 2px; border-radius: 6px; }
+}
+
+@layer components {
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold transition-[transform,background-color,border-color] duration-150 ease-out active:scale-[0.97] disabled:opacity-50 disabled:pointer-events-none; }
+  .btn-primary { @apply btn bg-brand text-white hover:bg-brand-dark; }
+  .btn-ghost { @apply btn border border-line bg-card text-ink hover:border-ink/40; }
+  .field { @apply w-full rounded-lg border border-line bg-card px-3 py-2.5 text-sm text-ink placeholder:text-muted/70 focus:border-brand focus:outline-none; }
+  .label { @apply mb-1.5 block text-xs font-semibold uppercase tracking-wider text-muted; }
+  .chip { @apply inline-flex items-center rounded-full border border-line bg-paper px-2.5 py-0.5 text-xs font-medium text-muted; }
+}
+
+@keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes pop { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: none; } }
+.rise { animation: rise 0.4s cubic-bezier(0.23, 1, 0.32, 1) both; animation-delay: calc(var(--i, 0) * 50ms); }
+.pop { animation: pop 0.2s cubic-bezier(0.23, 1, 0.32, 1) both; }
+.bar { transform-origin: left; animation: grow 0.6s cubic-bezier(0.23, 1, 0.32, 1) both; animation-delay: calc(var(--i, 0) * 50ms + 120ms); }
+@keyframes grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+@media (hover: hover) { .lift { transition: transform 0.2s ease-out, box-shadow 0.2s ease-out; } .lift:hover { transform: translateY(-2px); box-shadow: 0 8px 24px -12px rgba(29,26,23,0.25); } }
+@media (prefers-reduced-motion: reduce) { .rise, .pop, .bar { animation: none; } * { transition-duration: 0.01ms !important; } }
